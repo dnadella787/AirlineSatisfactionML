@@ -1,8 +1,8 @@
 
 library(readr)
-train <- suppressMessages(suppressWarnings(read_csv("./math156_project/train.csv"))) #training data
+train <- suppressMessages(suppressWarnings(read_csv("./train.csv"))) #training data
 train_no_id <- train[,-c(1,2)] #rid of index and id
-test <- suppressMessages(suppressWarnings(read_csv("./math156_project/test.csv"))) #testing data
+test <- suppressMessages(suppressWarnings(read_csv("./test.csv"))) #testing data
 test_no_id <- test[,-c(1,2)]
 
 # Deal with categorical variables
@@ -48,7 +48,7 @@ test_no_id$Cleanliness <- factor(test_no_id$Cleanliness)
 
 
 
-# Logistic Model
+#Train and test data without delay
 
 train_removeDelay <- train_no_id[-c(21,22)]
 train_removeDelay <- train_removeDelay[rowSums(is.na(train_removeDelay)) == 0, ]
@@ -56,19 +56,17 @@ train_removeDelay <- train_removeDelay[rowSums(is.na(train_removeDelay)) == 0, ]
 test_removeDelay <- test_no_id[-c(21,22)]
 
 
-# Reduced Logistic Regression Model
 
 
-# Reduced model
+
+# Reduced train and test data after feature selection 
 reduced_features_ind <- c(2:5, 8:9, 12, 16:17, 21:23)
 reduced_train <- train_no_id[, reduced_features_ind]
 
-
-# Test reduced model (88%)
 reduced_test <- test_no_id[, reduced_features_ind]
 
 #################################################################
-#Reduced KNN Model (original model with all features crashes model)
+#Reduced KNN Model
 library(class)
 
 #separate out the satisfaction from the predictor variables
